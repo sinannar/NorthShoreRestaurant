@@ -17,6 +17,13 @@ You can swithc between branches to see the progression
 12. Restaurant and subcomponents implemented
 13. Authentication & Authorization with aspnet identity
 
+## 1 `Angular Single Page Application`
+we will run `ng new NorthShoreSpa` in the root folder
+```
+    ? Would you like to add Angular routing? Yes
+    ? Which stylesheet format would you like to use? CSS
+```
+
 ## Cheatsheet
 * `ng new NorthShoreSpa`
 * `mkdir NorthShoreApi`
@@ -31,3 +38,4 @@ You can swithc between branches to see the progression
 * `dotnet sln .\NorthShoreApi.sln add .\NorthShore.EfContext\NorthShore.EfContext.csproj` 
 * `dotnet sln .\NorthShoreApi.sln add .\NorthShore.Infrastructure\NorthShore.Infrastructure.csproj` 
 * `dotnet sln .\NorthShoreApi.sln add .\NorthShore.Payload\NorthShore.Payload.csproj` 
+
