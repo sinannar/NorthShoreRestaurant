@@ -3,7 +3,6 @@ This repository contains the source code for presentation made by Sinan NAR at N
 You can swithc between branches to see the progression
 
 ---
-
 ## Content
 1. Angular single page application created by `ng new`
 2. Api project folder created and required project created by `dotnet`, `.gitignore` setup for projects
@@ -19,7 +18,6 @@ You can swithc between branches to see the progression
 12. Authentication & Authorization with aspnet identity
 
 ---
-
 ## 1 Angular Single Page Application
 we will run `ng new NorthShoreSpa` in the root folder<br>
 * `ng new NorthShoreSpa`
@@ -29,7 +27,6 @@ we will run `ng new NorthShoreSpa` in the root folder<br>
 ```
 
 ---
-
 ## 2 Aspnet Web Api Project
 create a folder `NorthShoreApi` with `mkdir` and get into it with `cd`<br>
 * `mkdir NorthShoreApi`
@@ -52,7 +49,6 @@ add projects to sln
 * `dotnet sln .\NorthShoreApi.sln add .\NorthShore.Payload\NorthShore.Payload.csproj` 
 
 ---
-
 ## 3 Swagger Configuration for Web Api
 Add swashbuckle aspnet core package to Api project
 * `dotnet add package Swashbuckle.AspNetCore`
@@ -95,7 +91,6 @@ visiting `https://localhost:5001/swagger/index.html` should show following
 ![picture-001](Pictures/picture-001.jpg)
 
 ---
-
 ## 4 NSwag Setup for Angular Spa Project
 Install nswag via npm<br>
 * `npm install nswag`
@@ -106,5 +101,29 @@ create nswag folder
 create `service.config.nswag` and `refresh.bat` files.<br>
 When you run `refresh.bat` in nswag folder, it will create `\NorthShoreSpa\src\shared\service-proxies.ts` file<br>
 `service-proxies.ts` contains view models and services for apis<br>
+
+---
+## First api call (ssl cert and cors)
+
+---
+## Entity Framework integration, creation of entities and first migration
+
+---
+## Repository implementations
+
+---
+## Service implementations
+
+---
+## API implementations
+
+---
+## Bootstrap integration
+
+---
+## Restaurant and subcomponen implementations
+
+---
+## Authentication & Authorization with aspnet identity
 
 ---
