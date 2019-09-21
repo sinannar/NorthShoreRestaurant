@@ -96,4 +96,15 @@ visiting `https://localhost:5001/swagger/index.html` should show following
 
 ---
 
+## 4 NSwag Setup for Angular Spa Project
+Install nswag via npm<br>
+* `npm install nswag`
 
+create nswag folder
+* `mkdir nswag`
+
+create `service.config.nswag` and `refresh.bat` files.<br>
+When you run `refresh.bat` in nswag folder, it will create `\NorthShoreSpa\src\shared\service-proxies.ts` file<br>
+`service-proxies.ts` contains view models and services for apis<br>
+
+---
