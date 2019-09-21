@@ -20,7 +20,7 @@ You can swithc between branches to see the progression
 
 ---
 
-## 1 `Angular Single Page Application`
+## 1 Angular Single Page Application
 we will run `ng new NorthShoreSpa` in the root folder<br>
 * `ng new NorthShoreSpa`
 ```
@@ -30,7 +30,7 @@ we will run `ng new NorthShoreSpa` in the root folder<br>
 
 ---
 
-## 2 `Aspnet Web Api Project`
+## 2 Aspnet Web Api Project
 create a folder `NorthShoreApi` with `mkdir` and get into it with `cd`<br>
 * `mkdir NorthShoreApi`
 
@@ -52,4 +52,48 @@ add projects to sln
 * `dotnet sln .\NorthShoreApi.sln add .\NorthShore.Payload\NorthShore.Payload.csproj` 
 
 ---
+
+## 3 Swagger Configuration for Web Api
+Add swashbuckle aspnet core package to Api project
+* `dotnet add package Swashbuckle.AspNetCore`
+
+Configure Startup.cs with followings
+```
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        ...
+        // Swagger setup
+        services.AddSwaggerGen(c => {
+            c.SwaggerDoc("v1", new Info
+            {
+                Version = "v1",
+                Title = "North Shore Demo API",
+                Description = "North Shore Demo API",
+                TermsOfService = "None",
+                Contact = new Contact() { Name = "Sinan NAR", Email = "sinan.nar@gmail.com" }
+            });
+        });
+        ...
+    }
+
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    {
+        ...
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Client Data V1");
+        });
+        ...
+    }
+}
+```
+
+visiting `https://localhost:5001/swagger/index.html` should show following
+![picture-001](Pictures/picture-001.jpg)
+
+---
+
 

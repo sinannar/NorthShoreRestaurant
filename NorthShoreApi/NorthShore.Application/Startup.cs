@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NorthShore.Application
 {
@@ -25,6 +26,19 @@ namespace NorthShore.Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Swagger setup
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "North Shore Demo API",
+                    Description = "North Shore Demo API",
+                    TermsOfService = "None",
+                    Contact = new Contact() { Name = "Sinan NAR", Email = "sinan.nar@gmail.com" }
+                });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -42,6 +56,13 @@ namespace NorthShore.Application
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Client Data V1");
+            });
+
             app.UseMvc();
         }
     }
