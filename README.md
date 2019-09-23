@@ -103,8 +103,70 @@ When you run `refresh.bat` in nswag folder, it will create `\NorthShoreSpa\src\s
 `service-proxies.ts` contains view models and services for apis<br>
 
 ---
-## First api call (ssl cert and cors)
+## 5. First api call (ssl cert and cors)
+1. change ValuesController route attribute as shown `[Route("api/[controller]/[action]")]`
+2. regenerate service proxies
+3. import `HttpClientModule` and app.module.ts
+4. set base url for service proxies as shown below
+```
+...
+import { environment } from '../environments/environment';
+import { API_BASE_URL as api_url } from '../shared/service-proxies';
+export function getRemoteServiceBaseUrl(): string {
+  return environment.backEndUrl;
+}
+...
+@NgModule({
+  ...
+  providers: [
+    { provide: api_url, useFactory: getRemoteServiceBaseUrl },
+  ],
+  ...
+})
+export class AppModule { }
+```
+5. inject ValuesServiceProxy into `app.component.ts` and do api call at ngOnInit, and show values on `app.component.html`
+6. update environment files which are `environment.ts` and `environment.prod.ts`
 
+After all of these, see the CORS problem on network or console tab of chrome dev tools as shown
+![picture-002](Pictures/picture-002.jpg)
+
+7. Solve CORS as shown below on Startup.cs
+``` 
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        ...
+        services.AddCors(options =>
+        {
+            options.AddPolicy(_defaultCorsPolicyName, builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
+        ...
+    }
+
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    {
+        ...
+        app.UseCors(_defaultCorsPolicyName);
+        ...
+    }
+}
+```
+
+After these, if ssl cert problem appears, use dotnet cli to 
+![picture-003](Pictures/picture-003.jpg)
+```
+$ dotnet dev-certs https --clean
+$ dotnet dev-certs https --trust
+```
 ---
 ## Entity Framework integration, creation of entities and first migration
 
