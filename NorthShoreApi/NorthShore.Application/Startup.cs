@@ -12,8 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NorthShore.Domain.Repositories;
+using NorthShore.Domain.Services;
 using NorthShore.EfContext.Context;
 using NorthShore.Infrastructure.Repositories;
+using NorthShore.Infrastructure.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace NorthShore.Application
@@ -45,6 +47,7 @@ namespace NorthShore.Application
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IFoodRepository, FoodRepository>();
             services.AddScoped<IFoodMenuMappingRepository, FoodMenuMappingRepository>();
+            services.AddScoped<IRestaurantService, RestaurantService>();
 
             //Configure CORS
             services.AddCors(options =>

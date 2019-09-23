@@ -282,6 +282,8 @@ public class NorthShoreDbContextFactory : IDesignTimeDbContextFactory<NorthShore
 ---
 ## 8. Service implementations
 
+Use current repositories in service to implement business rules.
+
 ---
 ## 9. API implementations
 
