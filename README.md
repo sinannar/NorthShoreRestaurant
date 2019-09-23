@@ -310,7 +310,9 @@ Use current repositories in service to implement business rules.
 ```
 ---
 ## 9. API implementations
-
+1. Create Dtos under payload project
+2. Create Adapters under payload project
+3. Create APIs 
 ---
 ## 10. Bootstrap integration
 
