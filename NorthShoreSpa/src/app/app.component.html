@@ -1,4 +1,11 @@
-<app-restaurant></app-restaurant>
+<div class="col-12">
+  <button class="col-4" (click)="triggerLogin()">Log in</button>
+  <button class="col-4" (click)="triggetRegister()">Register</button>
+  <button class="col-4" (click)="logout()">Log out</button>
+</div>
 
+<app-login *ngIf="authService.isAuthenticated === false && login === true"></app-login>
+<app-register *ngIf="authService.isAuthenticated === false && register === true"></app-register>
+<app-restaurant *ngIf="authService.isAuthenticated"></app-restaurant>
 
 <router-outlet></router-outlet>

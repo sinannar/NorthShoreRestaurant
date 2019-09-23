@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
@@ -35,6 +35,11 @@ import { EditFoodComponent } from './restaurant/edit-food/edit-food.component';
 import { EditMenuComponent } from './restaurant/edit-menu/edit-menu.component';
 import { ListFoodComponent } from './restaurant/list-food/list-food.component';
 import { ListMenuComponent } from './restaurant/list-menu/list-menu.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthService } from './auth/auth.service';
 
 export function getRemoteServiceBaseUrl(): string {
   return environment.backEndUrl;
@@ -49,7 +54,9 @@ export function getRemoteServiceBaseUrl(): string {
     EditFoodComponent,
     EditMenuComponent,
     ListFoodComponent,
-    ListMenuComponent
+    ListMenuComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +85,8 @@ export function getRemoteServiceBaseUrl(): string {
   ],
   providers: [
     { provide: api_url, useFactory: getRemoteServiceBaseUrl },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

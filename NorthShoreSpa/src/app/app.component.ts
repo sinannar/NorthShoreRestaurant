@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { ValuesServiceProxy } from 'src/shared/service-proxies';
+import { Component } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [ValuesServiceProxy]
 })
-export class AppComponent implements OnInit {
-  values: string[];
-  constructor(public service: ValuesServiceProxy) {
-
+export class AppComponent {
+  login = false;
+  register = false;
+  constructor(public authService: AuthService) {
   }
-
-  ngOnInit() {
-    this.service.getValues().subscribe(result => {
-      this.values = result;
-    });
+  triggerLogin() {
+    this.register = false;
+    this.login = !this.login;
+  }
+  triggetRegister() {
+    this.login = false;
+    this.register = !this.register;
+  }
+  logout() {
+    this.authService.isAuthenticated = false;
+    this.authService.token = '';
   }
 }
