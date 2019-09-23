@@ -168,7 +168,12 @@ $ dotnet dev-certs https --clean
 $ dotnet dev-certs https --trust
 ```
 ---
-## Entity Framework integration, creation of entities and first migration
+## 6. Entity Framework integration, creation of entities and first migration
+
+* `dotnet ef migrations add InitialMigration`
+* `dotnet ef database update`
+
+![picture-004](Pictures/picture-004.jpg)
 
 ---
 ## Repository implementations

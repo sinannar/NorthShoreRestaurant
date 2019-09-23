@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NorthShore.EfContext.Context;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace NorthShore.Application
@@ -28,6 +30,14 @@ namespace NorthShore.Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Connection string
+            var connectionString = _configuration["ConnectionStrings:MsSql"];
+
+            // Db context set up
+            services.AddDbContext<NorthShoreDbContext>(options => {
+                options.UseSqlServer(connectionString);
+            });
+
             //Configure CORS
             services.AddCors(options =>
             {
