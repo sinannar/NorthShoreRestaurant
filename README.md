@@ -170,9 +170,74 @@ $ dotnet dev-certs https --trust
 ---
 ## 6. Entity Framework integration, creation of entities and first migration
 
-* `dotnet ef migrations add InitialMigration`
-* `dotnet ef database update`
+1. Install following packages to EfContext project
+    * Microsoft.EntityFrameworkCore
+    * Microsoft.EntityFrameworkCore.SqlServer
+    * Microsoft.EntityFrameworkCore.Tools
+    * Microsoft.Extensions.Configuration.Json
+2. Add project dependcy to EfContext, to access Domain dll
+3. Create entities under Domain project with Entities namespace
+4. Create `NorthShoreDbContext` with DbSets in it with proper relationship
+5. Add connection strings to appsettings.{ENVIRONMENT}.json files as follows
+```
+  "ConnectionStrings": {
+    "MsSql": "Server=localhost;Database=NorthShoreRestaurantDb;Trusted_Connection=True;"
+  }
+```
+6. Update Startup class as follows
+```
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        var connectionString = _configuration["ConnectionStrings:MsSql"];
 
+        services.AddDbContext<NorthShoreDbContext>(options => {
+            options.UseSqlServer(connectionString);
+        });
+        ...
+    }
+}
+```
+7. Implement `IDesignTimeDbContextFactory` for `NorthShoreDbContext` as follows (this implementation depends project folder structure)
+```
+public class NorthShoreDbContextFactory : IDesignTimeDbContextFactory<NorthShoreDbContext>
+{
+    public NorthShoreDbContext CreateDbContext(string[] args)
+    {
+        string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        var directoryInfo = new DirectoryInfo(assemblyPath);
+        var root = directoryInfo.Parent.Parent.Parent.Parent;
+        var webapi = Path.Combine(root.FullName, "NorthShore.Application");
+
+        var conf = new ConfigurationBuilder()
+            .SetBasePath(webapi)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{environment}.json", optional: true).Build();
+
+        var optionsBuilder = new DbContextOptionsBuilder<NorthShoreDbContext>();
+        var connectionString = conf["ConnectionStrings:MsSql"];
+        optionsBuilder.UseSqlServer(connectionString);
+        return new NorthShoreDbContext(optionsBuilder.Options);
+    }
+}
+```
+8. Create initial migration via *dotnet clie* or *Package Manager Console*
+
+*CLI*
+```
+    dotnet ef migrations add InitialMigration
+    dotnet ef database update
+```
+
+*Package Manager Console*
+```
+    Add-Migration InitialMigration
+    Update-Database
+```
+
+9. After migration created and database updated, you should see the table in database as follows
 ![picture-004](Pictures/picture-004.jpg)
 
 ---
