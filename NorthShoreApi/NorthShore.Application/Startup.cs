@@ -16,16 +16,33 @@ namespace NorthShore.Application
 {
     public class Startup
     {
+        private const string _defaultCorsPolicyName = "locahost";
+        public IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Configure CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy(_defaultCorsPolicyName, builder =>
+                {
+                    //App:CorsOrigins in appsettings.json can contain more than one address with splitted by comma.
+                    builder
+                        //.WithOrigins(_appConfiguration["App:CorsOrigins"].Split(",", StringSplitOptions.RemoveEmptyEntries).Select(o => o.RemovePostFix("/")).ToArray())
+                        .AllowAnyOrigin() //TODO: Will be replaced by above when Microsoft releases microsoft.aspnetcore.cors 2.0 - https://github.com/aspnet/CORS/pull/94
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+
             // Swagger setup
             services.AddSwaggerGen(c =>
             {
@@ -56,7 +73,7 @@ namespace NorthShore.Application
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors(_defaultCorsPolicyName);
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
