@@ -42,7 +42,9 @@ namespace NorthShore.Application
 
             // Dependency Injection
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IFoodRepository, FoodRepository>();
+            services.AddScoped<IFoodMenuMappingRepository, FoodMenuMappingRepository>();
 
             //Configure CORS
             services.AddCors(options =>
