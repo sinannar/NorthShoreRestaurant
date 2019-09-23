@@ -15,6 +15,604 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
+export class RestaurantServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    /**
+     * @param requestDto (optional) 
+     * @return Success
+     */
+    createFood(requestDto: CreateFoodDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Restaurant/CreateFood";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(requestDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateFood(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateFood(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateFood(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param requestDto (optional) 
+     * @return Success
+     */
+    createMenu(requestDto: CreateMenuDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Restaurant/CreateMenu";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(requestDto);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateMenu(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateMenu(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreateMenu(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param request (optional) 
+     * @return Success
+     */
+    editFood(request: EditFoodDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Restaurant/EditFood";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEditFood(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEditFood(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processEditFood(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param requestId (optional) 
+     * @return Success
+     */
+    deleteFood(requestId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Restaurant/DeleteFood?";
+        if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteFood(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteFood(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteFood(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param requestId (optional) 
+     * @return Success
+     */
+    deleteMenu(requestId: number | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Restaurant/DeleteMenu?";
+        if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteMenu(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteMenu(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDeleteMenu(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    listFoods(): Observable<ShowFoodDto[]> {
+        let url_ = this.baseUrl + "/api/Restaurant/ListFoods";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processListFoods(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processListFoods(<any>response_);
+                } catch (e) {
+                    return <Observable<ShowFoodDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ShowFoodDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processListFoods(response: HttpResponseBase): Observable<ShowFoodDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ShowFoodDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ShowFoodDto[]>(<any>null);
+    }
+
+    /**
+     * @return Success
+     */
+    listMenus(): Observable<ShowMenuDto[]> {
+        let url_ = this.baseUrl + "/api/Restaurant/ListMenus";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processListMenus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processListMenus(<any>response_);
+                } catch (e) {
+                    return <Observable<ShowMenuDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ShowMenuDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processListMenus(response: HttpResponseBase): Observable<ShowMenuDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ShowMenuDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ShowMenuDto[]>(<any>null);
+    }
+
+    /**
+     * @param menuId (optional) 
+     * @return Success
+     */
+    listFoodsInMenu(menuId: number | null | undefined): Observable<ShowFoodDto[]> {
+        let url_ = this.baseUrl + "/api/Restaurant/ListFoodsInMenu?";
+        if (menuId !== undefined)
+            url_ += "menuId=" + encodeURIComponent("" + menuId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processListFoodsInMenu(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processListFoodsInMenu(<any>response_);
+                } catch (e) {
+                    return <Observable<ShowFoodDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ShowFoodDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processListFoodsInMenu(response: HttpResponseBase): Observable<ShowFoodDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ShowFoodDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ShowFoodDto[]>(<any>null);
+    }
+
+    /**
+     * @param menuId (optional) 
+     * @return Success
+     */
+    listFoodsNotInMenu(menuId: number | null | undefined): Observable<ShowFoodDto[]> {
+        let url_ = this.baseUrl + "/api/Restaurant/ListFoodsNotInMenu?";
+        if (menuId !== undefined)
+            url_ += "menuId=" + encodeURIComponent("" + menuId) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processListFoodsNotInMenu(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processListFoodsNotInMenu(<any>response_);
+                } catch (e) {
+                    return <Observable<ShowFoodDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ShowFoodDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processListFoodsNotInMenu(response: HttpResponseBase): Observable<ShowFoodDto[]> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(ShowFoodDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ShowFoodDto[]>(<any>null);
+    }
+
+    /**
+     * @param request (optional) 
+     * @return Success
+     */
+    addFoodToMenu(request: AddFoodToMenuDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Restaurant/AddFoodToMenu";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddFoodToMenu(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddFoodToMenu(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processAddFoodToMenu(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    /**
+     * @param request (optional) 
+     * @return Success
+     */
+    removeFoodFromMenu(request: RemoveFoodFromMenuDto | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Restaurant/RemoveFoodFromMenu";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRemoveFoodFromMenu(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRemoveFoodFromMenu(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRemoveFoodFromMenu(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class ValuesServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -79,6 +677,399 @@ export class ValuesServiceProxy {
         }
         return _observableOf<string[]>(<any>null);
     }
+}
+
+export class CreateFoodDto implements ICreateFoodDto {
+    calorie: number | undefined;
+    name: string | undefined;
+
+    constructor(data?: ICreateFoodDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.calorie = data["calorie"];
+            this.name = data["name"];
+        }
+    }
+
+    static fromJS(data: any): CreateFoodDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateFoodDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["calorie"] = this.calorie;
+        data["name"] = this.name;
+        return data; 
+    }
+
+    clone(): CreateFoodDto {
+        const json = this.toJSON();
+        let result = new CreateFoodDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateFoodDto {
+    calorie: number | undefined;
+    name: string | undefined;
+}
+
+export class CreateMenuDto implements ICreateMenuDto {
+    name: string | undefined;
+    discountRate: number | undefined;
+
+    constructor(data?: ICreateMenuDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.name = data["name"];
+            this.discountRate = data["discountRate"];
+        }
+    }
+
+    static fromJS(data: any): CreateMenuDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateMenuDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["discountRate"] = this.discountRate;
+        return data; 
+    }
+
+    clone(): CreateMenuDto {
+        const json = this.toJSON();
+        let result = new CreateMenuDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICreateMenuDto {
+    name: string | undefined;
+    discountRate: number | undefined;
+}
+
+export class EditFoodDto implements IEditFoodDto {
+    id: number | undefined;
+    calorie: number | undefined;
+    name: string | undefined;
+    isGlutenFree: boolean | undefined;
+    isDairyFree: boolean | undefined;
+    isNutFree: boolean | undefined;
+    price: number | undefined;
+
+    constructor(data?: IEditFoodDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.calorie = data["calorie"];
+            this.name = data["name"];
+            this.isGlutenFree = data["isGlutenFree"];
+            this.isDairyFree = data["isDairyFree"];
+            this.isNutFree = data["isNutFree"];
+            this.price = data["price"];
+        }
+    }
+
+    static fromJS(data: any): EditFoodDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EditFoodDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["calorie"] = this.calorie;
+        data["name"] = this.name;
+        data["isGlutenFree"] = this.isGlutenFree;
+        data["isDairyFree"] = this.isDairyFree;
+        data["isNutFree"] = this.isNutFree;
+        data["price"] = this.price;
+        return data; 
+    }
+
+    clone(): EditFoodDto {
+        const json = this.toJSON();
+        let result = new EditFoodDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IEditFoodDto {
+    id: number | undefined;
+    calorie: number | undefined;
+    name: string | undefined;
+    isGlutenFree: boolean | undefined;
+    isDairyFree: boolean | undefined;
+    isNutFree: boolean | undefined;
+    price: number | undefined;
+}
+
+export class ShowFoodDto implements IShowFoodDto {
+    id: number | undefined;
+    calorie: number | undefined;
+    name: string | undefined;
+    isGlutenFree: boolean | undefined;
+    isDairyFree: boolean | undefined;
+    isNutFree: boolean | undefined;
+    price: number | undefined;
+
+    constructor(data?: IShowFoodDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.calorie = data["calorie"];
+            this.name = data["name"];
+            this.isGlutenFree = data["isGlutenFree"];
+            this.isDairyFree = data["isDairyFree"];
+            this.isNutFree = data["isNutFree"];
+            this.price = data["price"];
+        }
+    }
+
+    static fromJS(data: any): ShowFoodDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ShowFoodDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["calorie"] = this.calorie;
+        data["name"] = this.name;
+        data["isGlutenFree"] = this.isGlutenFree;
+        data["isDairyFree"] = this.isDairyFree;
+        data["isNutFree"] = this.isNutFree;
+        data["price"] = this.price;
+        return data; 
+    }
+
+    clone(): ShowFoodDto {
+        const json = this.toJSON();
+        let result = new ShowFoodDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IShowFoodDto {
+    id: number | undefined;
+    calorie: number | undefined;
+    name: string | undefined;
+    isGlutenFree: boolean | undefined;
+    isDairyFree: boolean | undefined;
+    isNutFree: boolean | undefined;
+    price: number | undefined;
+}
+
+export class ShowMenuDto implements IShowMenuDto {
+    id: number | undefined;
+    name: string | undefined;
+    discountRate: number | undefined;
+    totalCalorie: number | undefined;
+    totalPrice: number | undefined;
+    discountedPrice: number | undefined;
+
+    constructor(data?: IShowMenuDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.name = data["name"];
+            this.discountRate = data["discountRate"];
+            this.totalCalorie = data["totalCalorie"];
+            this.totalPrice = data["totalPrice"];
+            this.discountedPrice = data["discountedPrice"];
+        }
+    }
+
+    static fromJS(data: any): ShowMenuDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ShowMenuDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["discountRate"] = this.discountRate;
+        data["totalCalorie"] = this.totalCalorie;
+        data["totalPrice"] = this.totalPrice;
+        data["discountedPrice"] = this.discountedPrice;
+        return data; 
+    }
+
+    clone(): ShowMenuDto {
+        const json = this.toJSON();
+        let result = new ShowMenuDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IShowMenuDto {
+    id: number | undefined;
+    name: string | undefined;
+    discountRate: number | undefined;
+    totalCalorie: number | undefined;
+    totalPrice: number | undefined;
+    discountedPrice: number | undefined;
+}
+
+export class AddFoodToMenuDto implements IAddFoodToMenuDto {
+    menuId: number | undefined;
+    foodIds: number[] | undefined;
+
+    constructor(data?: IAddFoodToMenuDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.menuId = data["menuId"];
+            if (Array.isArray(data["foodIds"])) {
+                this.foodIds = [] as any;
+                for (let item of data["foodIds"])
+                    this.foodIds.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): AddFoodToMenuDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddFoodToMenuDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["menuId"] = this.menuId;
+        if (Array.isArray(this.foodIds)) {
+            data["foodIds"] = [];
+            for (let item of this.foodIds)
+                data["foodIds"].push(item);
+        }
+        return data; 
+    }
+
+    clone(): AddFoodToMenuDto {
+        const json = this.toJSON();
+        let result = new AddFoodToMenuDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAddFoodToMenuDto {
+    menuId: number | undefined;
+    foodIds: number[] | undefined;
+}
+
+export class RemoveFoodFromMenuDto implements IRemoveFoodFromMenuDto {
+    menuId: number | undefined;
+    foodId: number | undefined;
+
+    constructor(data?: IRemoveFoodFromMenuDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.menuId = data["menuId"];
+            this.foodId = data["foodId"];
+        }
+    }
+
+    static fromJS(data: any): RemoveFoodFromMenuDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RemoveFoodFromMenuDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["menuId"] = this.menuId;
+        data["foodId"] = this.foodId;
+        return data; 
+    }
+
+    clone(): RemoveFoodFromMenuDto {
+        const json = this.toJSON();
+        let result = new RemoveFoodFromMenuDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IRemoveFoodFromMenuDto {
+    menuId: number | undefined;
+    foodId: number | undefined;
 }
 
 export class ApiException extends Error {

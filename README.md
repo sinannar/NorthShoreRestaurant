@@ -310,9 +310,10 @@ Use current repositories in service to implement business rules.
 ```
 ---
 ## 9. API implementations
-1. Create Dtos under payload project
-2. Create Adapters under payload project
-3. Create APIs 
+1. create Dtos under payload project
+2. create Adapters under payload project
+3. create APIs 
+4. refresh swagger generated clients and viewmodels
 ---
 ## 10. Bootstrap integration
 
