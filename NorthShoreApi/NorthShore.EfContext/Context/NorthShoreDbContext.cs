@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NorthShore.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace NorthShore.EfContext.Context
 {
-    public class NorthShoreDbContext : DbContext
+    public class NorthShoreDbContext : IdentityDbContext<IdentityUser>
     {
         /* Define a DbSet for each entity of the application */
         public virtual DbSet<Menu> Menus { get; set; }

@@ -383,5 +383,5 @@ For more information pls visit the [documentation of ngx-bootsrap](https://valor
 
 ---
 ## 12. Authentication & Authorization with aspnet identity
-
+1. install `Microsoft.AspNetCore.Identity.EntityFrameworkCore` to EfContext project
 ---
