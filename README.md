@@ -414,6 +414,134 @@ public class Startup
 }
 ```
 4. add migration for new db changes and update database, database should look like follows
+
 ![picture-005](Pictures/picture-005.jpg)
 
+5. add jwt settings to appsettings.{ENVIRONMENT}.json files as follows
+```
+  "Jwt": {
+    "Key": "SOME_RANDOM_KEY_DO_NOT_SHARE",
+    "Issuer": "http://yourdomain.com",
+    "ExpireDays": 30,
+    "ExpireMinutes": 1
+  }
+```
+
+6. setup jwt authentication on startup
+```
+    public class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            ...
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        RequireExpirationTime = true,
+                        ValidIssuer = _configuration["Jwt:Issuer"],
+                        ValidAudience = _configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
+                        ClockSkew = TimeSpan.Zero // remove delay of token when expire
+                    };
+                });
+            ...
+        }
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            ...
+            app.UseCookiePolicy();
+            app.UseAuthentication();
+            ...
+        }
+    }
+```
+
+7. implement AccountController
+8. add attributes to controllers `[AllowAnonymous]` or `[ApiController]`
+9. update swagger settings so `Authorization` header can be set as follows
+```
+public class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            ...
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "North Shore Demo API",
+                    Description = "North Shore Demo API",
+                    TermsOfService = "None",
+                    Contact = new Contact() { Name = "Sinan NAR", Email = "sinan.nar@gmail.com" }
+                });
+
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                {
+                    { "Bearer", new string[] { } }
+                });
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+            });
+            ...
+        }
+    }
+``` 
+10. implement `AuthService` in SPA project as singleton DIable
+```
+import { Injectable } from '@angular/core';
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthService {
+  public isAuthenticated = false;
+  public token = '';
+}
+```
+
+11. implement `AuthInterceptor` so api calls can have authorization header
+```
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private authService: AuthService) {
+  }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (this.authService.isAuthenticated) {
+      request = request.clone({ setHeaders: { Authorization: `Bearer ${this.authService.token}` } });
+    }
+    return next.handle(request);
+  }
+}
+```
+12. update app.module.ts as follows
+```
+@NgModule({
+    ...
+    providers: [
+    { provide: api_url, useFactory: getRemoteServiceBaseUrl },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthService
+  ],
+  bootstrap: [AppComponent]
+})
+```
+13. implement register and login pages so that application can be used
 ---
