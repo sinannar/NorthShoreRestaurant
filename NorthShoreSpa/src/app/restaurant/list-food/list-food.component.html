@@ -1,1 +1,39 @@
-<p>list-food works!</p>
+<div class="row col-12">
+  <div class="col-6">
+    <h4>Foods</h4>
+  </div>
+  <div class="col-6">
+    <button class="btn btn-primary" (click)="createFood()">Add food</button>
+  </div>
+</div>
+
+<div class="col-12">
+  <table class="table table-striped table-bordered table-sm">
+    <tbody>
+      <tr class="table-dark">
+        <th>Name</th>
+        <th>Calorie</th>
+        <th>IsDairyFree</th>
+        <th>IsGlutenFree</th>
+        <th>IsNutFree</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let food of foods">
+        <th>{{food.name}}</th>
+        <th>{{food.calorie}}</th>
+        <th>{{food.isDairyFree}}</th>
+        <th>{{food.isGlutenFree}}</th>
+        <th>{{food.isNutFree}}</th>
+        <th style="width: 5%;"><button class="btn btn-outline-secondary btn-sm" (click)="editFood(food)">Edit</button>
+        </th>
+        <th style="width: 5%;"><button class="btn btn-outline-secondary btn-sm"
+            (click)="deleteFood(food)">Delete</button>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-create-food [food]="createFoodDto" (saved)="created()" #createFoodModal></app-create-food>
+<app-edit-food [food]="editFoodDto" (saved)="edited()" #editFoodModal></app-edit-food>

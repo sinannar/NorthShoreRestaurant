@@ -1,1 +1,57 @@
-<p>edit-food works!</p>
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-child-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit food</h5>
+        <button class="close" (click)="hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body">
+          <form>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <label class="form-label">FoodName</label>
+                <input class="form-control" disabled type="text" name="FoodName" [(ngModel)]="food.name" required
+                  maxlength="64" minlength="2">
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <label class="form-label">Calorie</label>
+                <input type="number" name="Calorie" class="form-control" [(ngModel)]="food.calorie" required>
+              </div>
+            </div>
+            <div class="form-group form-float">
+              <label for="GlutenFreeOption" title="GlutenFreeOption">GlutenFreeOption</label>
+              <input type="checkbox" name="GlutenFreeOption" [(ngModel)]="food.isGlutenFree" title="GlutenFreeOption"
+                class="filled-in" id="GlutenFreeOption" />
+            </div>
+            <div class="form-group form-float">
+              <label for="DairyFreeOption" title="DairyFreeOption">DairyFreeOption</label>
+              <input type="checkbox" name="DairyFreeOption" [(ngModel)]="food.isDairyFree" title="DairyFreeOption"
+                class="filled-in" id="DairyFreeOption" />
+            </div>
+            <div class="form-group form-float">
+              <label for="NutFreeOption" title="NutFreeOption">NutFreeOption</label>
+              <input type="checkbox" name="NutFreeOption" [(ngModel)]="food.isNutFree" title="NutFreeOption"
+                class="filled-in" id="NutFreeOption" />
+            </div>
+            <div class="form-group form-float">
+              <div class="form-line">
+                <label class="form-label">Price</label>
+                <input type="decimal" name="Price" class="form-control" [(ngModel)]="food.price" required>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="hide()">Close</button>
+        <button class="btn btn-primary" (click)="save()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

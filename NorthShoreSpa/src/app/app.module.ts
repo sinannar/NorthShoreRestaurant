@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { CreateFoodComponent } from './restaurant/create-food/create-food.component';
 import { CreateMenuComponent } from './restaurant/create-menu/create-menu.component';
@@ -54,6 +56,7 @@ export function getRemoteServiceBaseUrl(): string {
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
 
     AccordionModule.forRoot(),
     AlertModule.forRoot(),

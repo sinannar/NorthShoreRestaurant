@@ -1,1 +1,92 @@
-<p>edit-menu works!</p>
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-child-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit menu</h5>
+        <button class="close" (click)="hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body">
+          <!--  -->
+          <!--  -->
+          <hr> <!-- ----------------  -->
+          <div>
+            <span>TotalCalorie {{menu.totalCalorie}}</span>
+          </div>
+          <div>
+            <span>TotalPrice {{menu.totalPrice}}</span>
+          </div>
+          <div>
+            <span>Discount {{menu.discountRate}}%</span>
+          </div>
+          <div>
+            <span>DiscountedPrice {{menu.discountedPrice}}</span>
+          </div>
+          <hr> <!-- ----------------  -->
+          <div>
+
+            <h6>Foods are not in the menu</h6>
+            <table class="table table-striped table-bordered table-sm">
+              <tbody>
+                <tr class="table-dark">
+                  <th>Name</th>
+                  <th>Calorie</th>
+                  <th>IsDairyFree</th>
+                  <th>IsGlutenFree</th>
+                  <th>IsNutFree</th>
+                  <th></th>
+                </tr>
+                <tr *ngFor="let food of foodsNotInMenu">
+                  <th>{{food.name}}</th>
+                  <th>{{food.calorie}}</th>
+                  <th>{{food.isDairyFree}}</th>
+                  <th>{{food.isGlutenFree}}</th>
+                  <th>{{food.isNutFree}}</th>
+                  <th style="width: 5%;"><button class="btn btn-outline-secondary btn-sm"
+                      (click)="setNewMapping(food)">Add</button>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <hr> <!-- ----------------  -->
+          <div>
+            <h6>Foods in the menu</h6>
+            <table class="table table-striped table-bordered table-sm">
+              <tbody>
+                <tr class="table-dark">
+                  <th>Name</th>
+                  <th>Calorie</th>
+                  <th>IsDairyFree</th>
+                  <th>IsGlutenFree</th>
+                  <th>IsNutFree</th>
+                  <th></th>
+                </tr>
+                <tr *ngFor="let food of foodsInMenu">
+                  <th>{{food.name}}</th>
+                  <th>{{food.calorie}}</th>
+                  <th>{{food.isDairyFree}}</th>
+                  <th>{{food.isGlutenFree}}</th>
+                  <th>{{food.isNutFree}}</th>
+                  <th style="width: 5%;"><button class="btn btn-outline-secondary btn-sm"
+                      (click)="deleteFoodMapping(food)">Delete</button>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr> <!-- ----------------  -->
+
+          <!--  -->
+          <!--  -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

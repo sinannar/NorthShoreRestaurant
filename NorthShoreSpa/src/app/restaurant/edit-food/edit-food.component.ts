@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
+import { EditFoodDto } from '../../../shared/service-proxies';
 
 @Component({
   selector: 'app-edit-food',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditFoodComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('modal', { static: false }) modal: ModalDirective;
+  @Input() food =  new EditFoodDto();
+  @Output() saved = new EventEmitter();
 
-  ngOnInit() {
+  constructor(private modalService: BsModalService) {}
+
+  show() {
+    this.modal.show();
+  }
+
+  hide() {
+    this.modal.hide();
+  }
+
+  save() {
+    this.saved.emit(null);
+    this.hide();
+  }
+
+  ngOnInit(): void {
   }
 
 }

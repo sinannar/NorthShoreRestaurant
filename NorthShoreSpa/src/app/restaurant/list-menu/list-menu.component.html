@@ -1,1 +1,39 @@
-<p>list-menu works!</p>
+<div class="row col-12">
+  <div class="col-6">
+    <h4>Menus</h4>
+  </div>
+  <div class="col-6">
+    <button class="btn btn-primary" (click)="createMenu()">Add Menu</button>
+  </div>
+</div>
+
+<div class="col-12">
+  <table class="table table-striped table-bordered table-sm">
+    <tbody>
+      <tr class="table-dark">
+        <th>Name</th>
+        <th>TotalCalorie</th>
+        <th>TotalPrice</th>
+        <th>DiscountRate</th>
+        <th>DiscountedPrice</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let menu of menus">
+        <th>{{menu.name}}</th>
+        <th>{{menu.totalCalorie}}</th>
+        <th>{{menu.totalPrice}}</th>
+        <th>{{menu.discountRate}}</th>
+        <th>{{menu.discountedPrice}}</th>
+        <th style="width: 5%;"><button class="btn btn-outline-secondary btn-sm" (click)="editMenu(menu)">Edit</button>
+        </th>
+        <th style="width: 5%;"><button class="btn btn-outline-secondary btn-sm"
+            (click)="deleteMenu(menu)">Delete</button>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-create-menu #createMenuModal [menu]="createMenuDto" (saved)="created()"></app-create-menu>
+<app-edit-menu #editMenuModal [menu]="editMenuDto" (saved)="updated()"></app-edit-menu>
