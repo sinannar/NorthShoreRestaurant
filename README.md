@@ -384,4 +384,36 @@ For more information pls visit the [documentation of ngx-bootsrap](https://valor
 ---
 ## 12. Authentication & Authorization with aspnet identity
 1. install `Microsoft.AspNetCore.Identity.EntityFrameworkCore` to EfContext project
+2. update db context setup as follows `public class NorthShoreDbContext : IdentityDbContext<IdentityUser>`
+3. update startup as follows
+```
+public class Startup
+{
+    ...
+    public void ConfigureServices(IServiceCollection services)
+    {
+        ...
+            services.AddDbContext<NorthShoreDbContext>(options => {
+                options.UseSqlServer(connectionString);
+            });
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredUniqueChars = 0;
+            })
+            .AddEntityFrameworkStores<NorthShoreDbContext>()
+            .AddDefaultTokenProviders();
+        ...
+    }
+    ...
+}
+```
+4. add migration for new db changes and update database, database should look like follows
+![picture-005](Pictures/picture-005.jpg)
+
 ---
