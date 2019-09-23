@@ -26,6 +26,13 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { RestaurantComponent } from './restaurant/restaurant.component';
+import { CreateFoodComponent } from './restaurant/create-food/create-food.component';
+import { CreateMenuComponent } from './restaurant/create-menu/create-menu.component';
+import { EditFoodComponent } from './restaurant/edit-food/edit-food.component';
+import { EditMenuComponent } from './restaurant/edit-menu/edit-menu.component';
+import { ListFoodComponent } from './restaurant/list-food/list-food.component';
+import { ListMenuComponent } from './restaurant/list-menu/list-menu.component';
 
 export function getRemoteServiceBaseUrl(): string {
   return environment.backEndUrl;
@@ -33,7 +40,14 @@ export function getRemoteServiceBaseUrl(): string {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RestaurantComponent,
+    CreateFoodComponent,
+    CreateMenuComponent,
+    EditFoodComponent,
+    EditMenuComponent,
+    ListFoodComponent,
+    ListMenuComponent
   ],
   imports: [
     BrowserModule,
