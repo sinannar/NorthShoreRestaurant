@@ -5,11 +5,8 @@ using System.Text;
 
 namespace NorthShore.Domain.Entities
 {
-    public class Food
+    public class Food : BaseEntity<long>
     {
-        [Key]
-        public long Id { get; set; }
-
         public int Calorie { get; set; }
         public string Name { get; set; }
         public bool IsGlutenFree { get; set; }

@@ -5,11 +5,8 @@ using System.Text;
 
 namespace NorthShore.Domain.Entities
 {
-    public class Menu
+    public class Menu : BaseEntity<long>
     {
-        [Key]
-        public long Id { get; set; }
-
         public string Name { get; set; }
         public decimal DiscountRate { get; set; }
         public decimal TotalCalorie { get; set; }
