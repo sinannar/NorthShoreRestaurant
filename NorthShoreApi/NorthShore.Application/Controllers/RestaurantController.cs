@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NorthShore.Domain.Repositories;
 using NorthShore.Domain.Services;
 using NorthShore.Payload.Adapters;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace NorthShore.Application.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class RestaurantController : Controller
