@@ -370,6 +370,14 @@ For more information pls visit the [documentation of ngx-bootsrap](https://valor
 
 ---
 ## 11. Restaurant and subcomponen implementations
+1. Use following commands to create necessary components
+    * `ng g component restaurant`
+    * `ng g component restaurant/create-food`
+    * `ng g component restaurant/create-menu`
+    * `ng g component restaurant/edit-food`
+    * `ng g component restaurant/edit-menu`
+    * `ng g component restaurant/list-food`
+    * `ng g component restaurant/list-menu`
 
 ---
 ## 12. Authentication & Authorization with aspnet identity
