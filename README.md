@@ -315,7 +315,58 @@ Use current repositories in service to implement business rules.
 3. create APIs 
 4. refresh swagger generated clients and viewmodels
 ---
-## 10. Bootstrap integration
+## 10. ngx-bootstrap integration
+1. run `npm install bootstrap`
+2. run `npm install ngx-bootstrap`
+3. add `<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">` to index.html
+4. import the component is being used so you can register in app.module.ts
+```
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { RatingModule } from 'ngx-bootstrap/rating';
+import { SortableModule } from 'ngx-bootstrap/sortable';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+
+@NgModule({
+    ...
+    imports: [
+        ...
+        AccordionModule.forRoot(),
+        AlertModule.forRoot(),
+        ButtonsModule.forRoot(),
+        CarouselModule.forRoot(),
+        CollapseModule.forRoot(),
+        BsDatepickerModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        ModalModule.forRoot(),
+        PaginationModule.forRoot(),
+        PopoverModule.forRoot(),
+        ProgressbarModule.forRoot(),
+        RatingModule.forRoot(),
+        SortableModule.forRoot(),
+        TabsModule.forRoot(),
+        TimepickerModule.forRoot(),
+        TooltipModule.forRoot(),
+        TypeaheadModule.forRoot(),
+    ],
+    ...
+})
+export class AppModule { }
+```
+
+For more information pls visit the [documentation of ngx-bootsrap](https://valor-software.com/ngx-bootstrap/#/documentation)
 
 ---
 ## 11. Restaurant and subcomponen implementations
