@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NorthShore.Domain.Repositories;
 using NorthShore.EfContext.Context;
+using NorthShore.Infrastructure.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace NorthShore.Application
@@ -37,6 +39,10 @@ namespace NorthShore.Application
             services.AddDbContext<NorthShoreDbContext>(options => {
                 options.UseSqlServer(connectionString);
             });
+
+            // Dependency Injection
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
             //Configure CORS
             services.AddCors(options =>

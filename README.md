@@ -242,7 +242,43 @@ public class NorthShoreDbContextFactory : IDesignTimeDbContextFactory<NorthShore
 
 ---
 ## 7. Repository implementations
+1. BaseEntity implementation as follows 
+```
+    public class BaseEntity<TKey>
+    {
+        [Key]
+        public TKey Id { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
+        public bool IsDeleted { get; set; }
+        public long? DeletedBy { get; set; }
+        public DateTimeOffset? DeletedAt { get; set; }
+    }
+```
+2. Update entities to extend BaseEntity as follows
+```
+    public class Food : BaseEntity<long>
+    {
+        ...
+    }
 
+    public class FoodMenuMapping : BaseEntity<long>
+    {
+        ...
+    }
+
+    public class Menu : BaseEntity<long>
+    {
+        ...
+    }
+```
+3. Add migrations and update database as follows
+```
+    dotnet ef migrations add BaseEntityMigration
+    dotnet ef database update
+```
+4. Create base Repository and UnitOfWork interfaces at Domain, and concrete implementations at Infrastructure
+5. Handle dependency injection at Startup
 ---
 ## 8. Service implementations
 
